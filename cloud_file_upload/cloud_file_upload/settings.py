@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1k@k_-!-=z=hyfpm4yp8tbcyap0kwz=izr)3jm$qcnvmm9gegb'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -77,8 +79,20 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': config('DATABASE_ENGINE'),
+        # 'NAME': config('DATABASE_NAME'),
+        # 'USER': config('DATABASE_USER'),
+        # 'PASSWORD': config('DATABASE_PASS'),
+        # 'HOST': config('DATABASE_HOST'),
+        # 'PORT': config('DATABASE_PORT', default=3306, cast=int),
     }
 }
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
 
 
 # Password validation
